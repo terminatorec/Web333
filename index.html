@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+ <div class="mainEthTable">
+
+  <div>
+    <button class="enableEthereumButton button">Enable Ethereum</button>
+  </div>
+  <h2>Account: <span class="showAccount"></span></h2>
+
+  <div>
+    <button class="ethBlockButton button">Last block</button>
+  </div>
+  <h2>Last eth block is: <span class="ethBlock"></span></h2>
+
+
+  <div>
+    <button class="ethBlockCountButton button">TX count</button>
+  </div>
+  <h2>Count: <span class="ethBlockCount"></span></h2>
+
+
+  <div>
+    <button class="ethLastestTXinBLockButton button">First TX about</button>
+  </div>
+  <div>
+    <h2>TX: <span class="ethLastestTXinBLock"></span></h2>
+    <h2>From: <span class="ethLastestTXFrom"></span></h2>
+    <h2>Balance: <span class="ethLastestTXBalance"></span></h2>
+    <h2>Value: <span class="ethLastestTXValue"></span></h2>
+    
+  </div>
+
+
+
+  <div>
+    <button class="ethContractButton button">Contract</button>
+  </div>
+  <div>
+
+    <h2>Community supply: <span class="ethContractCommunitySupply"></span></h2>
+    <h2>Community wallet: <span class="ethContractCommunityWallet"></span></h2>
+    <h2>Founders supply: <span class="ethContractFoundersSupply"></span></h2>
+    <h2>Max supply: <span class="ethContractMaxSupply"></span></h2>
+    <h2>Presale supply: <span class="ethContractPresaleSupply"></span></h2>
+    <h2>Public sale mint limit: <span class="ethContractPublicSaleMintLimit"></span></h2>
+    <h2>Is presale live: <span class="ethContractIsPresaleLIve"></span></h2>
+    
+  </div>
+
+
+
+  <div>
+    <button class="ethContractBalanceInterractButton button">Interract with contract</button>
+  </div>
+  <div>
+    <input type="text" class="ethContractBalanceInterractInput">
+    <h2>Balance of: <span class="ethContractBalanceInterract"></span></h2>
+  </div>
+  
+ </div>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+
+  <script>
+
+    // const web3 = new Web3(Web3.givenProvider);
+    
+    const web3 = new Web3("https://mainnet.infura.io/v3/c3954497e6a0444c8d7f9eb7a0ddb4be");
+    
+
+
+
+    // var Contract = require('web3-eth-contract');
+
+      // set provider for all later instances to use
+      // Contract.setProvider('ws://localhost:8546');
+
+      
+      
+          
+
+
+
+
+      const ethereumButton = document.querySelector('.enableEthereumButton');
+    const showAccount = document.querySelector('.showAccount');
+    ethereumButton.addEventListener('click', () => {
+      getAccount();
+    });
+
+    async function getAccount() {
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      const account = accounts[0];
+      showAccount.innerHTML = account;
+    }
+
+
+
+    const ethBlockButton = document.querySelector('.ethBlockButton');
+    const ethBlock = document.querySelector('.ethBlock');
+    ethBlockButton.addEventListener('click', () => {
+      getLastBlock();
+    });
+
+   function getLastBlock() {
+      web3.eth.getBlockNumber().then((result12) => {
+        ethBlock.innerHTML = result12;
+      });
+    }
+
+
+
+    const ethBlockCountButton = document.querySelector('.ethBlockCountButton');
+    const ethBlockCount = document.querySelector('.ethBlockCount');
+    ethBlockCountButton.addEventListener('click', () => {
+      getLastBlockCount();
+    });
+
+    async function getLastBlockCount() {
+      web3.eth.getBlockNumber().then((result12) => {
+        web3.eth.getBlockTransactionCount(result12).then((result) => {
+          ethBlockCount.innerHTML = result;
+      });
+      });
+    }
+
+
+    let contract = new web3.eth.Contract(
+        [{"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_symbol","type":"string"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"DirectMintFromBotNotAllowed","type":"error"},{"inputs":[],"name":"DirectMintFromContractNotAllowed","type":"error"},{"inputs":[],"name":"ExceedsAllocatedForCommunity","type":"error"},{"inputs":[],"name":"ExceedsAllocatedForFounders","type":"error"},{"inputs":[],"name":"ExceedsAllocatedForPreSale","type":"error"},{"inputs":[],"name":"ExceedsAllocatedForPublicSale","type":"error"},{"inputs":[],"name":"ExceedsMaxSupply","type":"error"},{"inputs":[],"name":"ExceedsPreSaleSupply","type":"error"},{"inputs":[],"name":"FounderClaimed","type":"error"},{"inputs":[],"name":"InsufficientETHSent","type":"error"},{"inputs":[],"name":"NotOnWhitelist","type":"error"},{"inputs":[],"name":"PreSaleInactive","type":"error"},{"inputs":[],"name":"PublicSaleInactive","type":"error"},{"inputs":[],"name":"WithdrawalFailed","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"remainingSupply","type":"uint256"}],"name":"Minted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"COMMUNITY_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"COMMUNITY_WALLET","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"FOUNDERS_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAIN_WALLET","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PRE_SALE_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PUBLIC_SALE_DROP_AMOUNT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PUBLIC_SALE_DROP_INTERVAL","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PUBLIC_SALE_MINT_LIMIT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"baseURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"communityAmountMinted","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"mintQuantity","type":"uint256"}],"name":"communityMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"floorPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"foundersAmountMinted","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"foundersClaimed","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"founderAddress","type":"address"}],"name":"foundersMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getDAData","outputs":[{"components":[{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"uint256","name":"currentTime","type":"uint256"}],"internalType":"struct IO.DADTO","name":"data","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getRemainingSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isPreSaleLive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isPublicSaleLive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"preSaleAmountMinted","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32[]","name":"_merkleproof","type":"bytes32[]"},{"internalType":"uint256","name":"allowedMintQuantity","type":"uint256"},{"internalType":"uint256","name":"mintQuantity","type":"uint256"}],"name":"preSaleBuy","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"publicSaleAmountMinted","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes","name":"signature","type":"bytes"}],"name":"publicSaleBuy","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"publicSaleClaimed","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"publicSaleStartPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"publicSaleStartTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"_uri","type":"string"}],"name":"setBaseURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"_merkleRoot","type":"bytes32"}],"name":"setMerkleRoot","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_price","type":"uint256"}],"name":"setPreSalePrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_price","type":"uint256"}],"name":"setPublicSaleStartPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_startTime","type":"uint256"}],"name":"setPublicSaleStartTime","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_signerAddress","type":"address"}],"name":"setSignerAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"togglePreSaleStatus","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"_value","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"whitelistClaimed","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}], "0x716F29B8972D551294d9E02B3eb0fC1107FbF4aA"
+      );
+
+
+    const ethLastestTXinBLockButton = document.querySelector('.ethLastestTXinBLockButton');
+    
+    const ethLastestTXinBLock = document.querySelector('.ethLastestTXinBLock');
+    const ethLastestTXValue = document.querySelector('.ethLastestTXValue');
+    const ethLastestTXFrom = document.querySelector('.ethLastestTXFrom');
+    const ethLastestTXBalance = document.querySelector('.ethLastestTXBalance');
+    ethLastestTXinBLockButton.addEventListener('click', () => {
+      getLastTxInBLock();
+    });
+
+    async function getLastTxInBLock() {
+      web3.eth.getBlockNumber().then((result12) => {
+        web3.eth.getTransactionFromBlock(result12, 0).then((result23) => {
+          ethLastestTXinBLock.innerHTML = result23.hash;
+          ethLastestTXFrom.innerHTML = result23.from;
+          web3.eth.getBalance(result23.from).then((resultBalance) => {
+            ethLastestTXBalance.innerHTML = resultBalance;
+          });
+          ethLastestTXValue.innerHTML = result23.value;
+          contract.methods.COMMUNITY_SUPPLY().call().then(console.log)
+      });
+      });
+    }
+
+    const ethContractButton = document.querySelector('.ethContractButton');
+    const ethContractCommunitySupply = document.querySelector('.ethContractCommunitySupply');
+    const ethContractCommunityWallet = document.querySelector('.ethContractCommunityWallet');
+    const ethContractFoundersSupply = document.querySelector('.ethContractFoundersSupply');
+    
+    const ethContractMaxSupply = document.querySelector('.ethContractMaxSupply');
+
+    const ethContractPresaleSupply = document.querySelector('.ethContractPresaleSupply');
+
+    const ethContractPublicSaleMintLimit = document.querySelector('.ethContractPublicSaleMintLimit');
+
+    const ethContractIsPresaleLIve = document.querySelector('.ethContractIsPresaleLIve');
+
+  
+    
+    ethContractButton.addEventListener('click', () => {
+      getContractFFF();
+    });
+
+    function getContractFFF() {
+
+      contract.methods.COMMUNITY_SUPPLY().call().then((resultContract) =>{
+        ethContractCommunitySupply.innerHTML = resultContract;
+      })
+
+      contract.methods.COMMUNITY_WALLET().call().then((resultContract) =>{
+        ethContractCommunityWallet.innerHTML = resultContract;
+      })
+
+      contract.methods.FOUNDERS_SUPPLY().call().then((resultContract) =>{
+        ethContractFoundersSupply.innerHTML = resultContract;
+      })
+
+      contract.methods.MAX_SUPPLY().call().then((resultContract) =>{
+        ethContractMaxSupply.innerHTML = resultContract;
+      })
+
+      contract.methods.PRE_SALE_SUPPLY().call().then((resultContract) =>{
+        ethContractPresaleSupply.innerHTML = resultContract;
+      })
+
+      contract.methods.PUBLIC_SALE_MINT_LIMIT().call().then((resultContract) =>{
+        ethContractPublicSaleMintLimit.innerHTML = resultContract;
+      })
+
+      contract.methods.isPreSaleLive().call().then((resultContract) =>{
+        ethContractIsPresaleLIve.innerHTML = resultContract;
+      })
+
+      
+
+    }
+    
+    
+    const ethContractBalanceInterractButton = document.querySelector('.ethContractBalanceInterractButton');
+    const ethContractBalanceInterract = document.querySelector('.ethContractBalanceInterract');
+    const ethContractBalanceInterractInput = document.querySelector('.ethContractBalanceInterractInput').value;
+    // const ethContractBalanceInterractInputString = ethContractBalanceInterractInput.value;
+    
+    
+    ethContractBalanceInterractButton.addEventListener('click', () => {
+      getContractFFFF();
+    });
+
+    function getContractFFFF() {
+      contract.methods.balanceOf(ethContractBalanceInterractInput).call().then((resultContract) =>{
+        ethContractBalanceInterract.innerHTML = resultContract;
+      })
+
+     
+      
+
+    }
+
+      
+
+
+      // ethContractFunc
+    
+      
+
+
+
+    
+
+    
+    // var Web3 = require('web3');
+    // var web3 = new Web3("https://mainnet.infura.io/v3/c3954497e6a0444c8d7f9eb7a0ddb4be");
+
+    // const web3 = new Web3(Web3.givenProvider || "https://mainnet.infura.io/v3/c3954497e6a0444c8d7f9eb7a0ddb4be");
+    
+    console.log(Web3.givenProvider);
+    // alert(web3.eth.getGasPrice());
+    web3.eth.getGasPrice().then(console.log);
+
+    // web3.eth.getBlockNumber().then(console.log);
+
+    // web3.eth.getBlockNumber().then((result12) => {
+    //   console.log("Latest Ethereum Block is ",result12);
+    //   ethBlock.innerHTML = result12;
+    // });
+
+
+//     web3.eth.getBlockNumber().then((result12) => {
+//       console.log("Latest Ethereum Block is ",result12);
+//       web3.eth.getBlockTransactionCount(result12).then((result) => {
+//           console.log("Count of transaction ",result);
+//       });
+//       web3.eth.getTransactionFromBlock(result12, 0).then((result23) => {
+//           console.log("First transaction ",result23.hash);
+//           console.log("First transaction value ",result23.value);
+//           console.log("First transaction fee ",result23.gas);
+//       });
+//       web3.eth.getUncle(result12,1).then((result) => {
+//           console.log("lastUncle ",result);
+//       });
+// });
+    
+
+
+
+    // web3.eth.getBlockNumber(result).then{
+    //   console.log(result);
+    // }
+    
+    </script>
+
+
+  
+</body>
+</html>
+

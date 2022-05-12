@@ -1,0 +1,24 @@
+*{
+    font-family: 'Comfortaa', cursive;
+    font-size: 20px;
+}
+.mainEthTable{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+}
+
+.button{
+    /* max-width: 250px; */
+    /* width: 40vw; */
+    /* margin: 0 auto; */
+    /* height: 40px; */
+    padding: 0;
+    text-align-last: left;
+    padding: 5px 20px;
+    align-self: center;
+}
+.ethContractBalanceInterractInput{
+    max-width: 550px;
+    width: 80%;
+    outline: none;
+}
