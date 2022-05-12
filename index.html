@@ -49,7 +49,11 @@
     <button class="ethContractButton button">Contract</button>
   </div>
   <div>
-
+    <h2 class="infoAboutNftCollection">
+      Imaginary Ones (IO) <br>
+      0x716f29b8972d551294d9e02b3eb0fc1107fbf4aa
+    </h2>
+    
     <h2>Community supply: <span class="ethContractCommunitySupply"></span></h2>
     <h2>Community wallet: <span class="ethContractCommunityWallet"></span></h2>
     <h2>Founders supply: <span class="ethContractFoundersSupply"></span></h2>
@@ -62,13 +66,29 @@
 
 
 
-  <div>
-    <button class="ethContractBalanceInterractButton button">Interract with contract</button>
-  </div>
-  <div>
-    <input type="text" class="ethContractBalanceInterractInput">
-    <h2>Balance of: <span class="ethContractBalanceInterract"></span></h2>
-  </div>
+    <div>
+      <button class="ethContractBalanceInterractButton button">Balance of holder</button>
+    </div>
+    <div>
+      <input type="text" class="ethContractBalanceInterractInput">
+      <h2>Balance: <span class="ethContractBalanceInterract"></span></h2>
+    </div>
+
+
+
+    <div>
+      <button class="ethContractHolderTokenButton button">Holder of token</button>
+    </div>
+    <div>
+      <input type="text" class="ethContractHolderTokenInput">
+      <h2>Address: <span class="ethContractHolderToken"></span></h2>
+      <!-- <h2>Link: <span class="ethContractHolderTokenLink"></span></h2> -->
+      <a href="" target="_blank" class="ethContractHolderTokenLink">Link</a>
+      <!-- <h2>Link: <span class="ethContractHolderTokenLink"></span></h2> -->
+    </div>
+
+
+
   
  </div>
 
@@ -228,8 +248,8 @@
     
     
     const ethContractBalanceInterractButton = document.querySelector('.ethContractBalanceInterractButton');
-    const ethContractBalanceInterract = document.querySelector('.ethContractBalanceInterract');
-    const ethContractBalanceInterractInput = document.querySelector('.ethContractBalanceInterractInput').value;
+    // var ethContractBalanceInterractInput = document.querySelector('.ethContractBalanceInterractInput').value;
+    var ethContractBalanceInterract = document.querySelector('.ethContractBalanceInterract');
     // const ethContractBalanceInterractInputString = ethContractBalanceInterractInput.value;
     
     
@@ -238,13 +258,32 @@
     });
 
     function getContractFFFF() {
+      var ethContractBalanceInterractInput = document.querySelector('.ethContractBalanceInterractInput').value;
       contract.methods.balanceOf(ethContractBalanceInterractInput).call().then((resultContract) =>{
         ethContractBalanceInterract.innerHTML = resultContract;
       })
+    }
+    
+    
 
-     
-      
 
+
+    const ethContractHolderTokenButton = document.querySelector('.ethContractHolderTokenButton');
+    var ethContractHolderToken = document.querySelector('.ethContractHolderToken');
+    var ethContractHolderTokenLink = document.querySelector('.ethContractHolderTokenLink');
+
+    ethContractHolderTokenButton.addEventListener('click', () => {
+      getContractFFFFF();
+    });
+
+    function getContractFFFFF() {
+      var ethContractHolderTokenInput = document.querySelector('.ethContractHolderTokenInput').value;
+      contract.methods.ownerOf(ethContractHolderTokenInput).call().then((resultContract) =>{
+        ethContractHolderToken.innerHTML = resultContract;
+        ethContractHolderTokenLink.setAttribute('href', ("https://opensea.io/" + resultContract));
+        // ethContractHolderTokenLink.innerHTML = "https://opensea.io/" + resultContract;
+        // ethContractHolderTokenLink.innerHTML = <a href="https://opensea.io/"resultContract>link</a>;
+      })
     }
 
       

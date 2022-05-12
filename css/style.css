@@ -22,3 +22,12 @@
     width: 80%;
     outline: none;
 }
+
+.infoAboutNftCollection{
+    background: rgba(0, 4, 255, 0.24);
+    width: 600px;
+    /* color: rgb(250, 212, 162); */
+    padding: 20px 0;
+    line-height: 150%;
+    border-radius: 5px;
+}
